@@ -1,3 +1,3 @@
-# HuHoBot Nukkit-MOT Adapter v1.0.0
+# HuHoBot Nukkit-MOT Adapter v1.0.1
 
-初始化项目
+fix: 修复服务端连接问题
