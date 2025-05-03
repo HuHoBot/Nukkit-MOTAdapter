@@ -19,8 +19,8 @@ public class QueryOnline extends EventRunner {
         boolean post_img = getConfig().getMotd().isPostImg();
 
         StringBuilder onlineNameString = new StringBuilder();
-        int onlineSize = -1;
         Map<UUID, Player> onlinePlayers = HuHoBot.getInstance().getServer().getOnlinePlayers();
+        int onlineSize = onlinePlayers.size();
         if (output_online_list && !onlinePlayers.isEmpty()) {
             onlinePlayers.values().forEach(player -> {
                 onlineNameString.append(player.getName()).append("\n");
