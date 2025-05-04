@@ -4,6 +4,8 @@ hashKey: ""
 chatFormat:
   from_game: "<{name}> {msg}"
   from_group: "群:<{nick}> {msg}"
+  post_chat: true
+  post_prefix: ""
 
 motd:
   server_ip: "play.easecation.net"
@@ -21,4 +23,4 @@ customCommand:
     command: "whitelist add &1"
     permission: 1
 
-version: 1
+version: 2

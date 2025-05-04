@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 public class BotConfig {
     private final Config config;
+    private final static int CurrentVersion = 2;
 
     // 根配置项
     @Getter private String serverId;
@@ -69,6 +70,10 @@ public class BotConfig {
                 .map(section -> new CustomCommand((ConfigSection) section))
                 .collect(Collectors.toList());
         version = config.getInt("version", 0); // 带默认值读取
+
+        if (version < CurrentVersion) {
+            migrateToV2();
+        }
     }
 
     // region 内部配置类
@@ -76,10 +81,14 @@ public class BotConfig {
     public static class ChatFormatConfig {
         private final String fromGame;
         private final String fromGroup;
+        private final boolean postChat;
+        private final String postPrefix;
 
         public ChatFormatConfig(ConfigSection section) {
             fromGame = section.getString("from_game", "<{name}> {msg}");
             fromGroup = section.getString("from_group", "群:<{nick}> {msg}");
+            postChat = section.getBoolean("post_chat", true);  // 新增布尔型配置项，默认true
+            postPrefix = section.getString("post_prefix", ""); // 新增字符串型配置项，默认空字符串
         }
     }
 
@@ -133,5 +142,23 @@ public class BotConfig {
         config.set("serverId", serverId);
         config.set("hashKey", hashKey);
         config.save();
+    }
+
+    // 新增迁移方法
+    private void migrateToV2() {
+        // 处理 chatFormat 配置升级
+        ConfigSection chatFormatSection = config.getSection("chatFormat");
+        if (!chatFormatSection.exists("post_chat")) {
+            chatFormatSection.put("post_chat", true); // 添加默认值
+        }
+        if (!chatFormatSection.exists("post_prefix")) {
+            chatFormatSection.put("post_prefix", ""); // 添加默认值
+        }
+
+        // 更新版本号
+        config.set("version", 2);
+        config.save(); // 立即保存迁移结果
+
+        version = 2; // 更新内存中的版本号
     }
 }

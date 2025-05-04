@@ -2,6 +2,7 @@ package cn.huohuas001.huHoBot;
 
 import cn.huohuas001.huHoBot.command.CommandManager;
 import cn.huohuas001.huHoBot.config.BotConfig;
+import cn.huohuas001.huHoBot.gameEvent.onChat;
 import cn.huohuas001.huHoBot.netEvent.*;
 import cn.huohuas001.huHoBot.tools.ConsoleSender;
 import cn.huohuas001.huHoBot.tools.PackId;
@@ -59,6 +60,9 @@ public class HuHoBot extends PluginBase {
         //连接
         clientManager = new WebsocketClientManager();
         clientManager.connectServer();
+
+        //注册事件
+        this.getServer().getPluginManager().registerEvents(new onChat(this), this);
 
         logger.info("HuHoBot Loaded. By HuoHuas001");
     }
