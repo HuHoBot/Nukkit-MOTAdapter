@@ -1,8 +1,3 @@
-# HuHoBot Nukkit-MOT Adapter v1.0.3
+# HuHoBot Nukkit-MOT Adapter v1.0.4
 
-feat(chat): 增加聊天事件处理功能
-
-- 新增 onChat 类实现聊天事件监听
-- 增加配置项支持聊天消息转发
-- 优化配置文件结构和版本管理
-- 添加 bStats 统计支持
+fix(Chat): 修复post_chat不能控制聊天转发
