@@ -8,6 +8,7 @@ import cn.nukkit.utils.Config;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import org.java_websocket.client.WebSocketClient;
+import org.java_websocket.drafts.Draft_6455;
 import org.java_websocket.handshake.ServerHandshake;
 import cn.nukkit.utils.TextFormat;
 
@@ -15,6 +16,9 @@ import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 
 
 public class WsClient extends WebSocketClient {
@@ -24,8 +28,32 @@ public class WsClient extends WebSocketClient {
     private final WebsocketClientManager clientManager;
 
 
-    public WsClient(URI serverUri, WebsocketClientManager clientManager) {
-        super(serverUri);
+    public WsClient(URI serverUri, WebsocketClientManager clientManager,
+                    Map<String, String> headers, SSLContext sslContext) {
+        super(serverUri, new Draft_6455(), headers, 10000); // 增加超时到10秒
+
+        try {
+            if (sslContext != null) {
+                SSLSocketFactory factory = sslContext.getSocketFactory();
+                SSLSocket socket = (SSLSocket) factory.createSocket();
+
+                // 强制启用TLS 1.2/1.3
+                socket.setEnabledProtocols(new String[]{"TLSv1.2", "TLSv1.3"});
+
+                // 可选：设置支持的密码套件
+                socket.setEnabledCipherSuites(new String[]{
+                        "TLS_AES_128_GCM_SHA256",
+                        "TLS_AES_256_GCM_SHA384",
+                        "TLS_CHACHA20_POLY1305_SHA256",
+                        "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
+                        "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+                });
+
+                this.setSocket(socket);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("创建SSL socket失败", e);
+        }
         this.plugin = HuHoBot.getInstance();
         this.logger = plugin.getLogger();
         this.clientManager = clientManager;

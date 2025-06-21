@@ -1,3 +1,5 @@
-# HuHoBot Nukkit-MOT Adapter v1.0.4
+# HuHoBot Nukkit-MOT Adapter v1.0.5
 
-fix(Chat): 修复post_chat不能控制聊天转发
+- **feat**: 重置项目Websocket底层，提升至`wss://`协议
+
+
