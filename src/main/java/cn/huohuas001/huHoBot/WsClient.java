@@ -28,7 +28,7 @@ public class WsClient extends WebSocketClient {
     private final WebsocketClientManager clientManager;
 
 
-    public WsClient(URI serverUri, WebsocketClientManager clientManager,
+    /*public WsClient(URI serverUri, WebsocketClientManager clientManager,
                     Map<String, String> headers, SSLContext sslContext) {
         super(serverUri, new Draft_6455(), headers, 10000); // 增加超时到10秒
 
@@ -54,6 +54,15 @@ public class WsClient extends WebSocketClient {
         } catch (Exception e) {
             throw new RuntimeException("创建SSL socket失败", e);
         }
+        this.plugin = HuHoBot.getInstance();
+        this.logger = plugin.getLogger();
+        this.clientManager = clientManager;
+    }*/
+
+
+
+    public WsClient(URI serverUri, WebsocketClientManager clientManager) {
+        super(serverUri);
         this.plugin = HuHoBot.getInstance();
         this.logger = plugin.getLogger();
         this.clientManager = clientManager;

@@ -1,5 +1,7 @@
-# HuHoBot Nukkit-MOT Adapter v1.0.5
+# HuHoBot Nukkit-MOT Adapter v1.0.6
 
-- **feat**: 重置项目Websocket底层，提升至`wss://`协议
+
+- **feat(Websocket)**: 修复部分连接问题
+
 
 
