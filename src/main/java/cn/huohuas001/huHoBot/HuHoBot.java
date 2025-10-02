@@ -63,7 +63,7 @@ public class HuHoBot extends PluginBase {
 
         //注册事件
         this.getServer().getPluginManager().registerEvents(new onChat(this), this);
-
+        sendBindMessage();
         logger.info("HuHoBot Loaded. By HuoHuas001");
     }
 

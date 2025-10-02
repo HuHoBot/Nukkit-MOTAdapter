@@ -20,7 +20,7 @@ public class SendHeart extends PluginTask<HuHoBot> {
     @Override
     public void onRun(int currentTick) {
         HuHoBot plugin = HuHoBot.getInstance();
-        //plugin.getClientManager().sendHeart();
+        plugin.getClientManager().sendHeart();
         //this.getOwner().getLogger().info("I've run on tick " + currentTick);
     }
 }

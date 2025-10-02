@@ -122,30 +122,6 @@ public class WebsocketClientManager {
         return false;
     }
 
-    private SSLContext createCloudflareSSLContext() throws Exception {
-        SSLContext context = SSLContext.getInstance("TLS");
-        context.init(null, new TrustManager[]{
-                new X509TrustManager() {
-                    public void checkClientTrusted(X509Certificate[] chain, String authType) {
-                    }
-
-                    public void checkServerTrusted(X509Certificate[] chain, String authType) {
-                        // 添加调试信息
-                /*logger.info("接受服务器证书: " +
-                    (chain != null && chain.length > 0 ? chain[0].getSubjectDN() : "无证书"));*/
-                    }
-
-                    public X509Certificate[] getAcceptedIssuers() {
-                        return new X509Certificate[0];
-                    }
-                }
-        }, new java.security.SecureRandom());
-
-        // 设置协议版本
-        context.getDefaultSSLParameters().setProtocols(new String[]{"TLSv1.2", "TLSv1.3"});
-        return context;
-    }
-
     public boolean isOpen() {
         return client.isOpen();
     }
